@@ -7,7 +7,7 @@ const topBannerSwiper = new Swiper('#top-banner .swiper-container', {
     },
 });
 
-// Inicialización de Swiper para el hero
+// Inicialización de Swiper para el hero con efectos de aparición
 const heroSwiper = new Swiper('#inicio .swiper-container', {
     direction: 'horizontal',
     loop: true,
@@ -20,6 +20,18 @@ const heroSwiper = new Swiper('#inicio .swiper-container', {
     navigation: {
         nextEl: '#inicio .swiper-button-next',
         prevEl: '#inicio .swiper-button-prev',
+    },
+    on: {
+        slideChangeTransitionStart: function () {
+            const activeSlide = this.slides[this.activeIndex];
+            const content =  activeSlide.querySelector('.fade-in');
+            content.style.opacity = '0';
+        },
+        slideChangeTransitionEnd: function () {
+            const activeSlide = this.slides[this.activeIndex];
+            const content = activeSlide.querySelector('.fade-in');
+            content.style.opacity = '1';
+        },
     },
 });
 
@@ -91,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// Función para manejar las reservas
+// Función para manejar las reservas a través de WhatsApp
 function handleReservation(event) {
     event.preventDefault();
     const form = event.target;
@@ -106,11 +118,21 @@ function handleReservation(event) {
         return;
     }
 
-    // Simulación de envío de datos
-    console.log('Datos de reserva:', Object.fromEntries(formData));
-    
-    // Mostrar confirmación
-    alert('¡Gracias por su reserva! Nos pondremos en contacto pronto para confirmar los detalles.');
+    // Crear mensaje para WhatsApp
+    const message = `Hola, me gustaría hacer una reserva:
+    - Fecha de llegada: ${formData.get('check-in')}
+    - Fecha de salida: ${formData.get('check-out')}
+    - Tipo de habitación: ${formData.get('room-type')}
+    - Número de huéspedes: ${formData.get('guests')}
+    - Solicitudes especiales: ${formData.get('special-requests') || 'Ninguna'}`;
+
+    // Codificar el mensaje para la URL
+    const encodedMessage = encodeURIComponent(message);
+
+    // Abrir WhatsApp con el mensaje predefinido
+    window.open(`https://wa.me/5491112345678?text=${encodedMessage}`, '_blank');
+
+    // Limpiar el formulario
     form.reset();
 }
 
@@ -130,39 +152,8 @@ function initMap() {
     const marker = new google.maps.Marker({
         position: hotelLocation,
         map: map,
-        title: 'Hualhum Hotel'
+        title: 'Hotel Hualum'
     });
-}
-
-// Cambio de tema (claro/oscuro)
-const themeToggle = document.getElementById('theme-toggle');
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    });
-
-    // Aplicar tema guardado
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark');
-    }
-}
-
-// Notificaciones Push (requiere implementación del backend)
-function subscribeToPushNotifications() {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-        navigator.serviceWorker.ready.then(function(registration) {
-            registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: 'TU_CLAVE_PUBLICA_VAPID'
-            }).then(function(subscription) {
-                console.log('Usuario suscrito:', subscription.toJSON());
-                // Enviar la suscripción al servidor
-            }).catch(function(error) {
-                console.error('Error al suscribir al usuario:', error);
-            });
-        });
-    }
 }
 
 // Remover el preloader cuando la página esté completamente cargada
@@ -170,6 +161,3 @@ window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
     preloader.style.display = 'none';
 });
-
-// Llamar a esta función cuando el usuario acepte recibir notificaciones
-// subscribeToPushNotifications();
