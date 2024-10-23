@@ -3,9 +3,13 @@ window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
     preloader.style.opacity = '0';
     setTimeout(() => {
-        preloader.style.visibility = 'hidden';
+        preloader.style.display = 'none';
     }, 500);
 });
+
+// Top Banner
+const topBanner = document.querySelector('.top-banner-content');
+topBanner.innerHTML += topBanner.innerHTML; // Duplicate content for seamless loop
 
 // Hero Swiper
 const heroSwiper = new Swiper('.hero-swiper', {
@@ -22,15 +26,9 @@ const heroSwiper = new Swiper('.hero-swiper', {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     },
-    on: {
-        init: function() {
-            this.el.addEventListener('mouseenter', () => {
-                this.autoplay.stop();
-            });
-            this.el.addEventListener('mouseleave', () => {
-                this.autoplay.start();
-            });
-        },
+    effect: 'fade',
+    fadeEffect: {
+        crossFade: true
     },
 });
 
@@ -58,25 +56,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Fade-in animation for elements
-const fadeInElements = document.querySelectorAll('.fade-in');
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
+// Lazy loading for images
+document.addEventListener("DOMContentLoaded", () => {
+    const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
+    if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
 
-fadeInElements.forEach(element => {
-    observer.observe(element);
+        lazyImages.forEach((lazyImage) => {
+            lazyImageObserver.observe(lazyImage);
+        });
+    } else {
+        // Fallback for browsers that don't support IntersectionObserver
+        lazyImages.forEach((lazyImage) => {
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImage.classList.remove("lazy");
+        });
+    }
 });
 
 // Reservation form handling
@@ -85,11 +90,11 @@ const reservationForm = document.getElementById('reservation-form');
 reservationForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(reservationForm);
-    
+
     // Validate dates
     const checkIn = new Date(formData.get('check-in'));
     const checkOut = new Date(formData.get('check-out'));
-    
+
     if (checkOut <= checkIn) {
         alert('La fecha de salida debe ser posterior a la fecha de llegada.');
         return;
@@ -133,30 +138,21 @@ function initMap() {
     });
 }
 
-// Lazy loading for images
-document.addEventListener('DOMContentLoaded', () => {
-    const lazyImages = [].slice.call(document.querySelectorAll('img.lazy'));
-    
-    if ('IntersectionObserver' in window) {
-        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    let lazyImage = entry.target;
-                    lazyImage.src = lazyImage.dataset.src;
-                    lazyImage.classList.remove('lazy');
-                    lazyImageObserver.unobserve(lazyImage);
-                }
-            });
+// Scroll animations
+const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+                observer.unobserve(entry.target);
+            }
         });
+    }, { threshold: 0.1 });
 
-        lazyImages.forEach((lazyImage) => {
-            lazyImageObserver.observe(lazyImage);
-        });
-    } else {
-        // Fallback for browsers that don't support IntersectionObserver
-        lazyImages.forEach((lazyImage) => {
-            lazyImage.src = lazyImage.dataset.src;
-            lazyImage.classList.remove('lazy');
-        });
-    }
-});
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+};
+
+document.addEventListener('DOMContentLoaded', animateOnScroll);
