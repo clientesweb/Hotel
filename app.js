@@ -24,13 +24,13 @@ const heroSwiper = new Swiper('#inicio .swiper-container', {
     on: {
         slideChangeTransitionStart: function () {
             const activeSlide = this.slides[this.activeIndex];
-            const content =  activeSlide.querySelector('.fade-in');
-            content.style.opacity = '0';
+            const content = activeSlide.querySelectorAll('.fade-in');
+            content.forEach(el => el.style.opacity = '0');
         },
         slideChangeTransitionEnd: function () {
             const activeSlide = this.slides[this.activeIndex];
-            const content = activeSlide.querySelector('.fade-in');
-            content.style.opacity = '1';
+            const content = activeSlide.querySelectorAll('.fade-in');
+            content.forEach(el => el.style.opacity = '1');
         },
     },
 });
@@ -65,10 +65,18 @@ const gallerySwiper = new Swiper('.gallery-swiper', {
 
 // Funcionalidad del menú móvil
 const menuToggle = document.getElementById('menu-toggle');
-const mobileMenu = document.querySelector('.md\\:flex');
+const mobileMenu = document.getElementById('mobile-menu');
 
 menuToggle.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
+});
+
+// Cerrar el menú móvil cuando se hace clic en un enlace
+const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
 });
 
 // Smooth scroll para los enlaces de navegación
@@ -112,7 +120,7 @@ function handleReservation(event) {
     // Validación de fechas
     const checkIn = new Date(formData.get('check-in'));
     const checkOut = new Date(formData.get('check-out'));
-    
+
     if (checkOut <= checkIn) {
         alert('La fecha de salida debe ser posterior a la fecha de llegada.');
         return;
@@ -120,11 +128,11 @@ function handleReservation(event) {
 
     // Crear mensaje para WhatsApp
     const message = `Hola, me gustaría hacer una reserva:
-    - Fecha de llegada: ${formData.get('check-in')}
-    - Fecha de salida: ${formData.get('check-out')}
-    - Tipo de habitación: ${formData.get('room-type')}
-    - Número de huéspedes: ${formData.get('guests')}
-    - Solicitudes especiales: ${formData.get('special-requests') || 'Ninguna'}`;
+- Fecha de llegada: ${formData.get('check-in')}
+- Fecha de salida: ${formData.get('check-out')}
+- Tipo de habitación: ${formData.get('room-type')}
+- Número de huéspedes: ${formData.get('guests')}
+- Solicitudes especiales: ${formData.get('special-requests') || 'Ninguna'}`;
 
     // Codificar el mensaje para la URL
     const encodedMessage = encodeURIComponent(message);
@@ -159,5 +167,28 @@ function initMap() {
 // Remover el preloader cuando la página esté completamente cargada
 window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
-    preloader.style.display = 'none';
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+        preloader.style.display = 'none';
+    }, 500);
 });
+
+// Animación de aparición para elementos cuando entran en el viewport
+const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+};
+
+// Llamar a la función de animación cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', animateOnScroll);
