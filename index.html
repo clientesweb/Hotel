@@ -10,16 +10,19 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta name="theme-color" content="#0f4c81">
+    <meta name="theme-color" content="#3B82F6">
     <style>
         :root {
-            --color-primary: #0f4c81;
-            --color-secondary: #f0f4f8;
-            --color-accent: #ffa500;
-            --color-text: #333333;
+            --color-primary: #3B82F6;
+            --color-secondary: #1E40AF;
+            --color-accent: #F59E0B;
+            --color-background: #F3F4F6;
+            --color-text: #1F2937;
         }
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
         }
         .preloader {
             position: fixed;
@@ -42,22 +45,42 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        .top-banner {
+            background-color: var(--color-secondary);
+            color: white;
+            overflow: hidden;
         }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .top-banner-content {
+            display: inline-flex;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
         .hero-swiper {
-            height: 100vh;
+            height: calc(100vh - 4rem);
         }
         .hero-content {
-            background-color: rgba(15, 76, 129, 0.7);
+            background-color: rgba(30, 64, 175, 0.7);
             padding: 2rem;
             border-radius: 10px;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
         }
         .whatsapp-button {
             position: fixed;
@@ -65,42 +88,32 @@
             right: 20px;
             z-index: 1000;
         }
-        .custom-shape-divider-bottom-1635177647 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
-        }
-        .custom-shape-divider-bottom-1635177647 svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 150px;
-        }
-        .custom-shape-divider-bottom-1635177647 .shape-fill {
-            fill: #FFFFFF;
-        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body>
     <div class="preloader">
         <img src="/images/hualhum-logo.png" alt="Hotel Hualum Logo" width="150" height="150">
     </div>
 
-    <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+    <div class="top-banner py-2">
+        <div class="top-banner-content">
+            <span class="px-4">¡Oferta especial! 20% de descuento en reservas de 3 noches o más</span>
+            <span class="px-4">Paquete romántico: Cena a la luz de las velas y spa incluidos</span>
+            <span class="px-4">Nuevo: Excursiones guiadas por Traslasierra. ¡Reserva ya!</span>
+        </div>
+    </div>
+
+    <header class="bg-white shadow-md sticky top-0 left-0 right-0 z-50">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center">
                 <img src="/images/hualhum-logo.png" alt="Hotel Hualum Logo" class="h-12 w-auto">
             </a>
             <div class="hidden md:flex space-x-6">
-                <a href="#inicio" class="text-primary hover:text-accent transition duration-300">Inicio</a>
-                <a href="#servicios" class="text-primary hover:text-accent transition duration-300">Servicios</a>
-                <a href="#habitaciones" class="text-primary hover:text-accent transition duration-300">Habitaciones</a>
-                <a href="#reservas" class="text-primary hover:text-accent transition duration-300">Reservas</a>
-                <a href="#contacto" class="text-primary hover:text-accent transition duration-300">Contacto</a>
+                <a href="#inicio" class="nav-link text-primary hover:text-secondary transition duration-300">Inicio</a>
+                <a href="#servicios" class="nav-link text-primary hover:text-secondary transition duration-300">Servicios</a>
+                <a href="#habitaciones" class="nav-link text-primary hover:text-secondary transition duration-300">Habitaciones</a>
+                <a href="#reservas" class="nav-link text-primary hover:text-secondary transition duration-300">Reservas</a>
+                <a href="#contacto" class="nav-link text-primary hover:text-secondary transition duration-300">Contacto</a>
             </div>
             <button id="menu-toggle" class="md:hidden text-primary focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -109,11 +122,11 @@
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white px-4 py-2 shadow-md">
-            <a href="#inicio" class="block py-2 text-primary hover:text-accent transition duration-300">Inicio</a>
-            <a href="#servicios" class="block py-2 text-primary hover:text-accent transition duration-300">Servicios</a>
-            <a href="#habitaciones" class="block py-2 text-primary hover:text-accent transition duration-300">Habitaciones</a>
-            <a href="#reservas" class="block py-2 text-primary hover:text-accent transition duration-300">Reservas</a>
-            <a href="#contacto" class="block py-2 text-primary hover:text-accent transition duration-300">Contacto</a>
+            <a href="#inicio" class="block py-2 text-primary hover:text-secondary transition duration-300">Inicio</a>
+            <a href="#servicios" class="block py-2 text-primary hover:text-secondary transition duration-300">Servicios</a>
+            <a href="#habitaciones" class="block py-2 text-primary hover:text-secondary transition duration-300">Habitaciones</a>
+            <a href="#reservas" class="block py-2 text-primary hover:text-secondary transition duration-300">Reservas</a>
+            <a href="#contacto" class="block py-2 text-primary hover:text-secondary transition duration-300">Contacto</a>
         </div>
     </header>
 
@@ -125,9 +138,9 @@
                         <img src="/images/hero-1.jpg" alt="Vista panorámica de Traslasierra" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center px-4">
                             <div class="text-center text-white hero-content">
-                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 fade-in">Bienvenido a Hotel Hualum</h1>
-                                <p class="text-xl md:text-2xl mb-8 fade-in">Tu escape perfecto en Traslasierra, Córdoba</p>
-                                <a href="#reservas" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 fade-in">
+                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Bienvenido a Hotel Hualum</h1>
+                                <p class="text-xl md:text-2xl mb-8">Tu escape perfecto en Traslasierra, Córdoba</p>
+                                <a href="#reservas" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300">
                                     Reservar Ahora
                                 </a>
                             </div>
@@ -137,9 +150,9 @@
                         <img src="/images/hero-2.jpg" alt="Piscina del hotel al atardecer" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center px-4">
                             <div class="text-center text-white hero-content">
-                                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 fade-in">Relájate en nuestro oasis</h2>
-                                <p class="text-xl md:text-2xl mb-8 fade-in">Disfruta de nuestra piscina con vistas increíbles</p>
-                                <a href="#servicios" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 fade-in">
+                                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Relájate en nuestro oasis</h2>
+                                <p class="text-xl md:text-2xl mb-8">Disfruta de nuestra piscina con vistas increíbles</p>
+                                <a href="#servicios" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300">
                                     Descubre Más
                                 </a>
                             </div>
@@ -149,9 +162,9 @@
                         <img src="/images/hero-3.jpg" alt="Habitación de lujo" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center px-4">
                             <div class="text-center text-white hero-content">
-                                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 fade-in">Confort y Elegancia</h2>
-                                <p class="text-xl md:text-2xl mb-8 fade-in">Habitaciones diseñadas para tu máxima comodidad</p>
-                                <a href="#habitaciones" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 fade-in">
+                                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Confort y Elegancia</h2>
+                                <p class="text-xl md:text-2xl mb-8">Habitaciones diseñadas para tu máxima comodidad</p>
+                                <a href="#habitaciones" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition duration-300">
                                     Ver Habitaciones
                                 </a>
                             </div>
@@ -162,43 +175,38 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            <div class="custom-shape-divider-bottom-1635177647">
-                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-                </svg>
-            </div>
         </section>
 
         <section id="servicios" class="py-20 bg-white">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary fade-in">Nuestros Servicios</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Nuestros Servicios</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-utensils text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Desayuno Gourmet</h3>
                         <p class="text-gray-600">Disfruta de un delicioso desayuno con productos locales y frescos.</p>
                     </div>
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-swimming-pool text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Piscina Panorámica</h3>
                         <p class="text-gray-600">Relájate en nuestra piscina con vistas impresionantes a las sierras.</p>
                     </div>
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-spa text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Spa y Bienestar</h3>
                         <p class="text-gray-600">Renueva cuerpo y mente con nuestros tratamientos de spa personalizados.</p>
                     </div>
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-hiking text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Excursiones Guiadas</h3>
                         <p class="text-gray-600">Explora la belleza natural de Traslasierra con nuestros guías expertos.</p>
                     </div>
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-cocktail text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Bar y Lounge</h3>
                         <p class="text-gray-600">Disfruta de cócteles artesanales y aperitivos en nuestro acogedor bar.</p>
                     </div>
-                    <div class="bg-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-concierge-bell text-4xl text-accent mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2 text-primary">Servicio de Conserjería</h3>
                         <p class="text-gray-600">Nuestro equipo está disponible 24/7 para atender todas tus necesidades.</p>
@@ -207,27 +215,27 @@
             </div>
         </section>
 
-        <section id="habitaciones" class="py-20 bg-secondary">
+        <section id="habitaciones" class="py-20 bg-gray-100">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary fade-in">Nuestras Habitaciones</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Nuestras Habitaciones</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg overflow-hidden  shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
                         <img src="/images/room-standard.jpg" alt="Habitación Estándar" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-primary">Habitación Estándar</h3>
-                            <p class="text-gray-600 mb-4">Perfecta para viajeros individuales o parejas que buscan confort y comodidad.</p>
+                            <p class="text-gray-600 mb-4">Perfecta para  viajeros individuales o parejas que buscan confort y comodidad.</p>
                             <ul class="text-sm text-gray-600 mb-4">
                                 <li><i class="fas fa-check text-accent mr-2"></i>Cama Queen</li>
                                 <li><i class="fas fa-check text-accent mr-2"></i>Baño privado</li>
                                 <li><i class="fas fa-check text-accent mr-2"></i>TV de pantalla plana</li>
                                 <li><i class="fas fa-check text-accent mr-2"></i>Minibar</li>
                             </ul>
-                            <a href="#reservas" class="block text-center bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                            <a href="#reservas" class="block text-center bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-full transition duration-300">
                                 Reservar
                             </a>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
                         <img src="/images/room-deluxe.jpg" alt="Habitación Deluxe" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-primary">Habitación Deluxe</h3>
@@ -238,12 +246,12 @@
                                 <li><i class="fas fa-check text-accent mr-2"></i>Bañera de hidromasaje</li>
                                 <li><i class="fas fa-check text-accent mr-2"></i>Zona de estar</li>
                             </ul>
-                            <a href="#reservas" class="block text-center bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                            <a href="#reservas" class="block text-center bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-full transition duration-300">
                                 Reservar
                             </a>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 fade-in">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
                         <img src="/images/room-suite.jpg" alt="Suite" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-primary">Suite</h3>
@@ -254,7 +262,7 @@
                                 <li><i class="fas fa-check text-accent mr-2"></i>Sala de estar</li>
                                 <li><i class="fas fa-check text-accent mr-2"></i>Servicio de mayordomo</li>
                             </ul>
-                            <a href="#reservas" class="block text-center bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                            <a href="#reservas" class="block text-center bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-full transition duration-300">
                                 Reservar
                             </a>
                         </div>
@@ -265,8 +273,8 @@
 
         <section id="reservas" class="py-20 bg-white">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary fade-in">Reserva tu Estancia</h2>
-                <form id="reservation-form" class="max-w-lg mx-auto bg-secondary p-8 rounded-lg shadow-md fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Reserva tu Estancia</h2>
+                <form id="reservation-form" class="max-w-lg mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
                     <div class="mb-4">
                         <label for="check-in" class="block text-gray-700 text-sm font-bold mb-2">Fecha de llegada</label>
                         <input type="date" id="check-in" name="check-in" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
@@ -293,7 +301,7 @@
                         <textarea id="special-requests" name="special-requests" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
                     <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300">
+                        <button type="submit" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-300">
                             Reservar Ahora
                         </button>
                     </div>
@@ -301,11 +309,11 @@
             </div>
         </section>
 
-        <section id="contacto" class="py-20 bg-secondary">
+        <section id="contacto" class="py-20 bg-gray-100">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary fade-in">Contacto y Ubicación</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Contacto y Ubicación</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="fade-in">
+                    <div>
                         <h3 class="text-xl font-semibold mb-4 text-primary">Información de Contacto</h3>
                         <p class="mb-2"><i class="fas fa-map-marker-alt text-accent mr-2"></i> Ruta Provincial 14, Km 5, Traslasierra, Córdoba, Argentina</p>
                         <p class="mb-2"><i class="fas fa-phone text-accent mr-2"></i> +54 9 11 1234-5678</p>
@@ -325,10 +333,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fade-in">
+                    <div>
                         <h3 class="text-xl font-semibold mb-4 text-primary">Nuestra Ubicación</h3>
                         <div id="map" class="w-full h-64 rounded-lg shadow-md"></div>
-                        <a href="https://goo.gl/maps/XXXXXX" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                        <a href="https://goo.gl/maps/XXXXXX" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-full transition duration-300">
                             <i class="fas fa-directions mr-2"></i>Cómo llegar
                         </a>
                     </div>
@@ -380,6 +388,6 @@
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
-    <script src="app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
