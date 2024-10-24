@@ -8,18 +8,19 @@ const topBannerSwiper = new Swiper('#top-banner .swiper-container', {
 });
 
 // Inicialización de Swiper para el hero
-const heroSwiper = new Swiper('#inicio .swiper-container', {
+const heroSwiper = new Swiper('.hero-swiper', {
     direction: 'horizontal',
     loop: true,
     autoplay: {
         delay: 5000,
     },
     pagination: {
-        el: '#inicio .swiper-pagination',
+        el: '.swiper-pagination',
+        clickable: true,
     },
     navigation: {
-        nextEl: '#inicio .swiper-button-next',
-        prevEl: '#inicio .swiper-button-prev',
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
     },
 });
 
@@ -53,7 +54,7 @@ const gallerySwiper = new Swiper('.gallery-swiper', {
 
 // Funcionalidad del menú móvil
 const menuToggle = document.getElementById('menu-toggle');
-const mobileMenu = document.querySelector('.md\\:flex');
+const mobileMenu = document.getElementById('mobile-menu');
 
 menuToggle.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
@@ -140,12 +141,27 @@ if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark');
         localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        updateThemeIcon();
     });
 
     // Aplicar tema guardado
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
     }
+
+    // Actualizar icono del tema
+    function updateThemeIcon() {
+        const icon = themeToggle.querySelector('i');
+        if (document.body.classList.contains('dark')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+
+    updateThemeIcon();
 }
 
 // Notificaciones Push (requiere implementación del backend)
@@ -169,6 +185,20 @@ function subscribeToPushNotifications() {
 window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
     preloader.style.display = 'none';
+});
+
+// Efecto de scroll para el header
+const header = document.querySelector('header');
+let lastScrollTop = 0;
+
+window.addEventListener('scroll', () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > lastScrollTop) {
+        header.style.transform = 'translateY(-100%)';
+    } else {
+        header.style.transform = 'translateY(0)';
+    }
+    lastScrollTop = scrollTop;
 });
 
 // Llamar a esta función cuando el usuario acepte recibir notificaciones
