@@ -125,7 +125,6 @@ window.onclick = function(event) {
     }
 }
 
-
 // Inicialización del mapa de Google
 function initMap() {
     const hotelLocation = { lat: -31.6512, lng: -65.0074 }; // Coordenadas de ejemplo
@@ -202,3 +201,20 @@ window.addEventListener('scroll', () => {
     }
     lastScrollTop = scrollTop;
 });
+
+// Inicializar AOS
+AOS.init({
+    duration: 1000,
+    once: true,
+});
+
+// Registrar el Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('SW registrado: ', registration);
+        }).catch(registrationError => {
+            console.log('SW registro falló: ', registrationError);
+        });
+    });
+}
