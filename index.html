@@ -40,6 +40,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
 
         .gradient-bg {
@@ -89,14 +90,14 @@
         }
 
         .section-padding {
-            padding-top: 6rem;
-            padding-bottom: 6rem;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
         }
 
         @media (min-width: 768px) {
             .section-padding {
-                padding-top: 8rem;
-                padding-bottom: 8rem;
+                padding-top: 6rem;
+                padding-bottom: 6rem;
             }
         }
 
@@ -189,6 +190,22 @@
                 transform: scale(1);
             }
         }
+
+        /* Ajustes responsivos adicionales */
+        @media (max-width: 640px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            h1, h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-content {
+                padding: 0 1rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 bg-pattern">
@@ -209,7 +226,7 @@
     </div>
 
     <header class="fixed w-full z-40 transition-all duration-300 header-blur" style="top: 40px;">
-        <nav class="container mx-auto px-6 py-3">
+        <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <a href="#" class="flex items-center">
                     <img src="/images/hualhum-logo.png" alt="Hotel Hualum Logo" class="h-12 w-auto mr-2">
@@ -226,10 +243,9 @@
                         <i class="fab fa-facebook-f"></i>
                     </a>
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-primary-color dark:text-gray-300 dark:hover:text-white transition-colors duration-300">
-                        <i class="fab fa-instagram"></i>
+                        <i class="fab  fa-instagram"></i>
                     </a>
                     <button id="theme-toggle" class="text-gray-600 hover:text-primary-color dark:text-gray-300 dark:hover:text-white transition-colors duration-300">
-                
                         <i class="fas fa-moon"></i>
                     </button>
                 </div>
@@ -284,10 +300,10 @@
         </section>
 
         <section id="servicios" class="section-padding bg-white dark:bg-gray-800">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 text-gradient" data-aos="fade-up">Nuestros Servicios</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 w-full max-w-sm" data-aos="fade-up" data-aos-delay="100">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
                         <i class="fas fa-concierge-bell text-5xl text-primary-color mb-4"></i>
                         <h3 class="text-xl md:text-2xl font-semibold mb-2">Servicio de Habitaciones</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-4">Disfruta de nuestro servicio de habitaciones las 24 horas del día.</p>
@@ -297,7 +313,7 @@
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Servicio rápido</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 w-full max-w-sm" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
                         <i class="fas fa-swimming-pool text-5xl text-primary-color mb-4"></i>
                         <h3 class="text-xl md:text-2xl font-semibold mb-2">Piscina Panorámica</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-4">Relájate en nuestra piscina con vistas impresionantes a las sierras.</p>
@@ -307,7 +323,7 @@
                             <li><i class="fas fa-check text-green-500 mr-2"></i>Bar en la piscina</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 w-full max-w-sm" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
                         <i class="fas fa-spa text-5xl text-primary-color mb-4"></i>
                         <h3 class="text-xl md:text-2xl font-semibold mb-2">Spa y Bienestar</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-4">Renueva cuerpo y mente con nuestros tratamientos de spa personalizados.</p>
@@ -322,7 +338,7 @@
         </section>
 
         <section id="habitaciones" class="section-padding bg-gray-100 dark:bg-gray-900">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 text-gradient" data-aos="fade-up">Nuestras Habitaciones</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
@@ -378,7 +394,7 @@
         </section>
 
         <section id="resenas" class="section-padding bg-white dark:bg-gray-800">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 text-gradient" data-aos="fade-up">Lo que dicen nuestros huéspedes</h2>
                 <div class="swiper-container reviews-swiper">
                     <div class="swiper-wrapper">
@@ -442,7 +458,7 @@
         </section>
 
         <section id="contacto" class="section-padding bg-gray-100 dark:bg-gray-900">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 text-gradient" data-aos="fade-up">Contacto y Ubicación</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div data-aos="fade-up" data-aos-delay="100">
@@ -478,7 +494,7 @@
     </main>
 
     <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6">
+        <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div>
                     <img src="/images/hualhum-logo-white.png" alt="Hotel Hualum Logo" class="h-12 w-auto mb-4">
