@@ -5,6 +5,10 @@ const topBannerSwiper = new Swiper('#top-banner .swiper-container', {
     autoplay: {
         delay: 5000,
     },
+    effect: 'fade',
+    fadeEffect: {
+        crossFade: true
+    },
 });
 
 // Inicialización de Swiper para el hero
@@ -22,33 +26,9 @@ const heroSwiper = new Swiper('.hero-swiper', {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     },
-});
-
-// Inicialización de Swiper para la galería
-const gallerySwiper = new Swiper('.gallery-swiper', {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    loop: true,
-    autoplay: {
-        delay: 3000,
-    },
-    pagination: {
-        el: '.gallery-swiper .swiper-pagination',
-        clickable: true,
-    },
-    navigation: {
-        nextEl: '.gallery-swiper .swiper-button-next',
-        prevEl: '.gallery-swiper .swiper-button-prev',
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-        },
+    effect: 'fade',
+    fadeEffect: {
+        crossFade: true
     },
 });
 
@@ -93,33 +73,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Función para manejar las reservas
-function handleReservation(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    // Validación de fechas
-    const checkIn = new Date(formData.get('check-in'));
-    const checkOut = new Date(formData.get('check-out'));
-    
-    if (checkOut <= checkIn) {
-        alert('La fecha de salida debe ser posterior a la fecha de llegada.');
-        return;
-    }
-
-    // Simulación de envío de datos
-    console.log('Datos de reserva:', Object.fromEntries(formData));
-    
-    // Mostrar confirmación
-    alert('¡Gracias por su reserva! Nos pondremos en contacto pronto para confirmar los detalles.');
-    form.reset();
+function handleReservation(room) {
+    const message = encodeURIComponent(`Hola, me gustaría reservar la ${room} en el Hotel Hualum. ¿Podrían proporcionarme más información sobre disponibilidad y precios?`);
+    window.open(`https://wa.me/5491112345678?text=${message}`, '_blank');
 }
 
-// Agregar el evento al formulario de reserva
-const reservationForm = document.getElementById('reservation-form');
-if (reservationForm) {
-    reservationForm.addEventListener('submit', handleReservation);
-}
+// Agregar el evento a los botones de reserva
+document.querySelectorAll('.reserve-room').forEach(button => {
+    button.addEventListener('click', function() {
+        const room = this.getAttribute('data-room');
+        handleReservation(room);
+    });
+});
 
 // Inicialización del mapa de Google
 function initMap() {
@@ -127,11 +92,22 @@ function initMap() {
     const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
         center: hotelLocation,
+        styles: [
+            {
+                featureType: "all",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: "#1e3a8a" },
+                    { saturation: 50 },
+                    { lightness: 10 }
+                ]
+            }
+        ]
     });
     const marker = new google.maps.Marker({
         position: hotelLocation,
         map: map,
-        title: 'Hualhum Hotel'
+        title: 'Hotel Hualum'
     });
 }
 
@@ -145,7 +121,7 @@ if (themeToggle) {
     });
 
     // Aplicar tema guardado
-    if (localStorage.getItem('theme') === 'dark') {
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.body.classList.add('dark');
     }
 
@@ -164,27 +140,13 @@ if (themeToggle) {
     updateThemeIcon();
 }
 
-// Notificaciones Push (requiere implementación del backend)
-function subscribeToPushNotifications() {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-        navigator.serviceWorker.ready.then(function(registration) {
-            registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: 'TU_CLAVE_PUBLICA_VAPID'
-            }).then(function(subscription) {
-                console.log('Usuario suscrito:', subscription.toJSON());
-                // Enviar la suscripción al servidor
-            }).catch(function(error) {
-                console.error('Error al suscribir al usuario:', error);
-            });
-        });
-    }
-}
-
 // Remover el preloader cuando la página esté completamente cargada
 window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
-    preloader.style.display = 'none';
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+        preloader.style.display = 'none';
+    }, 500);
 });
 
 // Efecto de scroll para el header
@@ -200,6 +162,3 @@ window.addEventListener('scroll', () => {
     }
     lastScrollTop = scrollTop;
 });
-
-// Llamar a esta función cuando el usuario acepte recibir notificaciones
-// subscribeToPushNotifications();
