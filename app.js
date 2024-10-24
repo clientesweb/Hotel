@@ -22,13 +22,27 @@ const heroSwiper = new Swiper('.hero-swiper', {
         el: '.swiper-pagination',
         clickable: true,
     },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
     effect: 'fade',
     fadeEffect: {
         crossFade: true
+    },
+});
+
+// Inicialización de Swiper para las reseñas
+const reviewsSwiper = new Swiper('.reviews-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+        delay: 3000,
+    },
+    breakpoints: {
+        640: {
+            slidesPerView: 2,
+        },
+        1024: {
+            slidesPerView: 3,
+        },
     },
 });
 
@@ -85,6 +99,30 @@ document.querySelectorAll('.reserve-room').forEach(button => {
         handleReservation(room);
     });
 });
+
+// Agregar funcionalidad para el modal de imágenes de habitaciones
+const modal = document.getElementById("roomModal");
+const modalImg = document.getElementById("roomImage");
+const roomImages = document.querySelectorAll(".room-image");
+const closeBtn = document.getElementsByClassName("close")[0];
+
+roomImages.forEach(img => {
+    img.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    }
+});
+
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 
 // Inicialización del mapa de Google
 function initMap() {
