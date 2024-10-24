@@ -31,7 +31,7 @@ const heroSwiper = new Swiper('.hero-swiper', {
 // Inicialización de Swiper para las reseñas
 const reviewsSwiper = new Swiper('.reviews-swiper', {
     slidesPerView: 1,
-    spaceBetween: 30,
+    spaceBetween: 20,
     loop: true,
     autoplay: {
         delay: 3000,
@@ -39,9 +39,11 @@ const reviewsSwiper = new Swiper('.reviews-swiper', {
     breakpoints: {
         640: {
             slidesPerView: 2,
+            spaceBetween: 20,
         },
         1024: {
             slidesPerView: 3,
+            spaceBetween: 30,
         },
     },
 });
